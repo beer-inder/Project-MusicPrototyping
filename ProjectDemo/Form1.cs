@@ -12,6 +12,7 @@ namespace ProjectDemo
 {
     public partial class Form1 : Form
     {
+        bool bold = false;
         public Form1()
         {
             InitializeComponent();
@@ -92,7 +93,17 @@ namespace ProjectDemo
 
         private void BoldtoolStripButton1_Click(object sender, EventArgs e)
         {
-            richTextBox1.Font = new Font(FonttoolStripComboBox1.SelectedItem.ToString(), 16, FontStyle.Bold);
+            if(bold==false)
+            {
+                richTextBox1.Font = new Font(richTextBox1.Font.FontFamily, richTextBox1.Font.Size, FontStyle.Bold);
+                bold = true;
+            }
+            else if (bold==true)
+            {
+                richTextBox1.Font = new Font(richTextBox1.Font.FontFamily, richTextBox1.Font.Size, FontStyle.Regular);
+                bold = false;
+            }
+            
             
            
         }
@@ -110,6 +121,54 @@ namespace ProjectDemo
         private void CopytoolStripButton1_Click(object sender, EventArgs e)
         {
             richTextBox1.Copy();   
+        }
+
+        private void zoomInToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            float zoomFac = richTextBox1.ZoomFactor;
+            zoomFac += 2;
+            if (zoomFac <=64)
+            {
+                
+                richTextBox1.ZoomFactor = zoomFac;
+            }
+            
+        }
+
+        private void zoomOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            float zoomFac = richTextBox1.ZoomFactor;
+            zoomFac -= 2;
+            if (zoomFac < 0.02)
+            {
+                // do nothing
+            }
+            else
+            {
+                
+                richTextBox1.ZoomFactor = zoomFac;
+            }
+            
+        }
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Undo();
+        }
+
+        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Redo();
+        }
+
+        private void FonttoolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            richTextBox1.Font = new Font(FonttoolStripComboBox1.SelectedItem.ToString(), richTextBox1.Font.Size, richTextBox1.Font.Style);
+        }
+
+        private void FontSizetoolStripComboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            richTextBox1.Font = new Font(richTextBox1.Font.FontFamily, float.Parse(FontSizetoolStripComboBox2.SelectedItem.ToString()), richTextBox1.Font.Style);
         }
     }
 }
